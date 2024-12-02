@@ -10,6 +10,7 @@ class formStore{
         address:"",
         company:""
     }
+    count = 0
     disable : boolean = false
     savedForms:formType[] = []
     constructor() {
@@ -18,13 +19,15 @@ class formStore{
             updateFormField:action,
             save:action,
             reset:action,
-            disable:observable
+            disable:observable,
+            count:observable
         })
         this.save = this.save.bind(this)
         this.reset = this.reset.bind(this)
     }
     updateFormField(field : keyof formType, value : number | string | undefined){
         this.form[field] = value
+        this.count++;
         console.log(this.form)
     }
     save(){
