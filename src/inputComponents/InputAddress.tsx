@@ -1,33 +1,38 @@
 import React, {Component} from "react";
 import formStore from "../stores/FormStore"
 import {observer} from "mobx-react";
-interface inputTypes{
+interface Props{
+    req:boolean
+}
+interface structure{
     Address:string
 }
 @observer
-class InputAddress extends Component<{}, inputTypes> {
-    state = {
+class InputAddress extends Component<Props, structure> {
+    FormStore:any = formStore
+    state:structure = {
         Address : ""
     }
-    FormStore = formStore
-    constructor(props:any) {
+    constructor(props:Props) {
         super(props);
         this.FormStore = formStore
         this.handleChangeInputAddress = this.handleChangeInputAddress.bind(this)
-
     }
+
     handleChangeInputAddress(event: React.ChangeEvent<HTMLInputElement>){
+        const add = event.target.value
         this.setState(
             {
-                Address:event.target.value
+                Address:add
             }
         )
-        this.FormStore.updateFormField("address", this.state.Address);
+        this.FormStore.updateFormField("address", add);
     }
     render() {
+        console.log("rendering address")
         const {Address} = this.state
-        return <div style = {{display : "flex"}}>
-            <p>Enter Your Address : </p>
+        return <div className={(this.FormStore.disable)?"disable" : ""} style = {{display : "flex"}}>
+            <p>Enter Your Address : <>{(this.props.req)?"*" : "" }</></p>
             <input
                 type="text"
                 value={Address}

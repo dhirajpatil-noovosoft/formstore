@@ -1,12 +1,15 @@
 import React, {Component} from "react";
 import formStore from "../stores/FormStore";
 import {observer} from "mobx-react";
-interface inputTypes{
+interface Props{
+    req:boolean
+}
+interface structure{
     Company:string
 }
 @observer
-class InputCompany extends Component<{}, inputTypes> {
-    state = {
+class InputCompany extends Component<Props, structure> {
+    state:structure = {
         Company : ""
     }
     FormStore = formStore;
@@ -35,8 +38,8 @@ class InputCompany extends Component<{}, inputTypes> {
     }
     render() {
         const {Company} = this.state
-        return<div style={{display:"flex"}}>
-            <p>please select your company name : </p>
+        return<div className={(this.FormStore.disable)?"disable" : ""} style={{display:"flex"}}>
+            <p>please select your company name : <>{(this.props.req)?"*" : "" } </> </p>
             <select
                 value={Company}
                 onChange={this.handleChangeInputCompany}

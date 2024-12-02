@@ -1,11 +1,12 @@
 import React from 'react';
 import './App.css';
-import Form from "./components/Form";
-
+import FormStore from "./stores/FormStore"
+import Field from "./inputComponents/Field";
 function App() {
+    const  req = ["name", "address", "company"];
   return (
     <div className="App">
-      <Form />
+        <Field FormComponent={FormStore} req={req}/>
     </div>
   );
 }
